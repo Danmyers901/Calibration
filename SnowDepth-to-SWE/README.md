@@ -1,4 +1,4 @@
-SnowDepth-to-SWE
+# SnowDepth-to-SWE
 
 This code converts snow depth data (from the Mote et al. 2018 dataset) to SWE using the equations of Hill et al. 2018.
 It then reformats the SWE as observed_daily.csv files.
