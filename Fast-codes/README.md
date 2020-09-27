@@ -1,4 +1,4 @@
-Fast-codes
+# Fast-codes
 
 The codes rchproc_fast.m and hruproc_fast.m can be used in place of the original codes (e.g. rchproc.m) to speed up AMALGAM.
 They create sim_daily.dat files all at once, instead of one at a time, which can make things 5-10x faster for big watersheds.
