@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#SBATCH -J StJoe_test2_BigRed
+#SBATCH -p general
+#SBATCH -o StJoe2_BigRed_run
+#SBATCH -e StJoe2_BigRed_error
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=myersdt@iu.edu
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=32
+#SBATCH --time=12:00:00
+  
+cd /N/slate/myersdt/StJoe_misc/StJoe_test2/Mfiles
+
+module load matlab
+matlab
+
+matlab < runAMALGAM.m
