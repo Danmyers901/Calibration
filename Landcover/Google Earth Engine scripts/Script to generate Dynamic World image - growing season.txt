@@ -1,4 +1,4 @@
-// This code extracts a 2019 (top probability) Dynamic World landcover image for the Potomac River Watershed. It could be set to extract other time periods, datasets, or areas by changing the collection filters and dates in the first few lines.
+// This code extracts a (top probability) Dynamic World landcover image for the Potomac River Watershed. It could be set to extract other time periods, datasets, or areas by changing the collection filters and dates in the first few lines.
 // I originally set it to take the highest probability Jan-Dec, but the Dynamic World publication says you can do spring equinox to autumn equinox to account for growing season only.
 // Earth Engine Code Editor: https://developers.google.com/earth-engine/guides/playground
 // Dan Myers, 7/1/22
