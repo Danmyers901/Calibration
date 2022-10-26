@@ -90,5 +90,5 @@ Export.image.toDrive({
 
 // Then, don't forget to go to the Tasks tab on the right to finally run the export tasks!
 
-// Tutorial: https://developers.google.com/earth-engine/tutorials/community/introduction-to-dynamic-world-pt-1
+// This script was adapted from the Google Earth Engine tutorial "Introduction to Dynamic World (Part 1) - Visualization and Creating Composites" at https://developers.google.com/earth-engine/tutorials/community/introduction-to-dynamic-world-pt-1
 
