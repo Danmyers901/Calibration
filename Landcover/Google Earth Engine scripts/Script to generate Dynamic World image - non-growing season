@@ -1,0 +1,94 @@
+// This code extracts a 2019 (top probability) Dynamic World landcover image for the Potomac River Watershed. It could be set to extract other time periods, datasets, or areas by changing the collection filters and dates in the first few lines.
+// I originally set it to take the highest probability Jan-Dec, but the Dynamic World publication says you can do spring equinox to autumn equinox to account for growing season only.
+// Earth Engine Code Editor: https://developers.google.com/earth-engine/guides/playground
+// Dan Myers, 7/1/22
+
+// Creating Multi-temporal composites
+// Select a region
+// Browse feature collections: https://developers.google.com/earth-engine/datasets/catalog 
+var sheds = ee.FeatureCollection("USGS/WBD/2017/HUC04");
+var filtered = sheds.filter(ee.Filter.eq('huc4', '0207'));
+var geometry = filtered.geometry();
+Map.centerObject(geometry, 10);
+
+// Filter by the region
+var startDate = '2016-03-21';
+var endDate = '2016-09-22';
+
+var dw = ee.ImageCollection('GOOGLE/DYNAMICWORLD/V1')
+             .filterDate(startDate, endDate)
+             .filterBounds(geometry);
+
+// Create a mode composite
+var classification = dw.select('label');
+var dwComposite = classification.reduce(ee.Reducer.mode());
+
+// Visualize annual composite
+var dwVisParams = {
+  min: 0,
+  max: 8,
+  palette: [
+    '#419BDF', '#397D49', '#88B053', '#7A87C6', '#E49635', '#DFC35A',
+    '#C4281B', '#A59B8F', '#B39FE1'
+  ]
+};
+
+// Clip the composite and add it to the Map.
+Map.addLayer(dwComposite.clip(geometry), dwVisParams, 'Classified Composite');
+
+// Create a probability hillshade distribution
+var probabilityBands = [
+  'water', 'trees', 'grass', 'flooded_vegetation', 'crops', 'shrub_and_scrub',
+  'built', 'bare', 'snow_and_ice'
+];
+
+// Select probability bands.
+var probabilityCol = dw.select(probabilityBands);
+
+// Create an image with the average pixel-wise probability
+// of each class across the time-period.
+var meanProbability = probabilityCol.reduce(ee.Reducer.mean());
+
+// Set projection to something better than wgs84 for raster computing (wgs84 pseudo-mercator)
+var projection = ee.Projection('EPSG:3857').atScale(10);
+var meanProbability = meanProbability.setDefaultProjection(projection);
+
+// Create the Top-1 Probability Hillshade.
+var top1Probability = meanProbability.reduce(ee.Reducer.max());
+var top1Confidence = top1Probability.multiply(100).int();
+var hillshade = ee.Terrain.hillshade(top1Confidence).divide(255);
+var rgbImage = dwComposite.visualize(dwVisParams).divide(255);
+var probabilityHillshade = rgbImage.multiply(hillshade);
+
+// Clip hillshade and add to map
+var hillshadeVisParams = {min: 0, max: 0.8};
+Map.addLayer(
+   probabilityHillshade.clip(geometry), hillshadeVisParams,
+  'Probability Hillshade');
+
+// Export the composite (for data processing purposes)
+Export.image.toDrive({
+  folder: 'ee',
+  image: dwComposite.clip(geometry),
+  description: 'DWv1_lulc_potomac_GrowingSeason_2016-03-21_2016-09-22',
+  region: geometry,
+  scale: 10,
+  maxPixels: 1e10
+});
+
+// Export the Top-1 Probability Hillshade Composite (for visualization purposes)
+//var hillshadeComposite = probabilityHillshade.visualize(hillshadeVisParams);
+
+//Export.image.toDrive({
+//  folder: 'ee',
+//  image: hillshadeComposite.clip(geometry),
+//  description: '2020_dw_composite_hillshade',
+//  region: geometry,
+//  scale: 10,
+//  maxPixels: 1e10
+//});
+
+// Then, don't forget to go to the Tasks tab on the right to finally run the export tasks!
+
+// Tutorial: https://developers.google.com/earth-engine/tutorials/community/introduction-to-dynamic-world-pt-1
+
