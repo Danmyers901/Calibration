@@ -1,3 +1,5 @@
+# Seasonal landcover variation and environmental modeling scripts
+
 These scripts are from the Myers et al. study with seasonal landcover variation and environmental modeling.
 
 They use the following dataset:
