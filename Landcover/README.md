@@ -31,6 +31,8 @@ References for other data sources and packages we used for model development and
 
 Abbaspour, K. C., Vaghefi, S. A., Yang, H. & Srinivasan, R. Global soil, landuse, evapotranspiration, historical and future weather databases for SWAT Applications. Scientific Data 2019 6:1 6, 1–11 (2019).
 
+European Space Agency (ESA). Sentinel-2 MSI User Guide. Sentinel-2 MSI (2020).
+
 III, K. G. R. et al. StreamStats, version 4. Fact Sheet (2017) doi:10.3133/FS20173046.
 
 Jin, S. et al. Overall Methodology Design for the United States National Land Cover Database 2016 Products. Remote Sensing 2019, Vol. 11, Page 2971 11, 2971 (2019).
