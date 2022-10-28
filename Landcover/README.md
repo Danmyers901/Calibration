@@ -11,7 +11,7 @@ The Google Earth Engine Code Editor scripts can be run to generate growing and n
 
 The scripts to reproduce LULC, hydrologic, and supplementary figures and analyses can be run in R (https://www.r-project.org/). Set the working directories to the data folders, then run the included .R scripts to reproduce our analyses and figures. You may need to install packages that the scripts mention. The scripts were run with R 4.2.0. Scripts should run in <1 minute.
 
-Our data includes water quality measurements from the United States National Park Service, and remotely sensed landcover images from Dynamic World, for 37 current (+18 inactive) monitoring sites near Washington, D.C., USA. Water quality data were downloaded from the Water Quality Portal at https://www.waterqualitydata.us/.
+Our data includes water quality measurements from the United States National Park Service, and remotely sensed landcover images from Dynamic World, for 37 current (+18 inactive) monitoring sites near Washington, D.C., USA. Water quality data were downloaded from the Water Quality Portal at https://www.waterqualitydata.us/ using the Project ID search term “NCRNWQ01”.
 
 Brown, C. F. et al. Dynamic World, Near real-time global 10 m land use land cover mapping. Scientific Data 2022 9:1 9, 1–17 (2022).
 
