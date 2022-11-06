@@ -58,7 +58,7 @@ points(lulc_non$built, medians_all$Specific.conductance, col="blue")
 points(nlcd$urb_tot_OLMH, medians_all$Specific.conductance, col="gold")
 
 # Legend
-legend("topleft",legend=c("Growing Season", "Non-growing Season", "NLCD 2016"), col=c("red", "blue","gold"),pch=1,
+legend("topleft",legend=c("Growing Season", "Non-growing Season", "NLCD"), col=c("red", "blue","gold"),pch=1,
        bg="white")
 
 
@@ -93,7 +93,7 @@ lines((lulc_non$built), lm_SpeCond_nongrowing$fitted.values, col="blue")
 lines((nlcd$urb_tot_OLMH), lm_nlcd$fitted.values, col="gold")
 
 ## MONO BUCK barcharts
-data1 <- data.frame(model=c("Dyn. World\ngrowing","Dyn. World\nnon-growing","NLCD\n2016"), 
+data1 <- data.frame(model=c("Dyn. World\ngrowing","Dyn. World\nnon-growing","NLCD"), 
                     surfQmm = c(242.59, 289.58,307.07),
                     Nyield_kgHa = c(0.753, 1.139,2.847),
                     SOPyield_kgHa = c(0.053, 0.075,0.209))
@@ -161,5 +161,5 @@ lines(date,Flow_NLCD16,col="gold",lwd=3,lty=3)
 title("f)",adj=0, cex.main=2)
 
 # Add legend
-legend("topleft", legend=c("Observed","Growing season model", "Non-grow. season model","NLCD 2016 model"), 
+legend("topleft", legend=c("Observed","Growing season model", "Non-grow. season model","NLCD model"), 
        lty=c(1,1,2,3), lwd=c(4,3,3,3), col=c("black","red","blue","gold"),bg="white")
