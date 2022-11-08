@@ -4,7 +4,7 @@ These scripts are from the Myers et al. study with seasonal landcover variation 
 
 They use the following dataset:
 
-Myers, Daniel; Jones, David; Oviedo-Vargas, Diana; Schmit, John Paul; Ficklin, Darren; Zhang, Xuesong (2022), “Seasonal landcover variation and environmental modeling data”, Mendeley Data, V1, doi: 10.17632/bbb9xbpv22.1
+Myers, Daniel; Jones, David; Oviedo-Vargas, Diana; Schmit, John Paul; Ficklin, Darren; Zhang, Xuesong (2022), “Seasonal landcover variation and environmental modeling data”, Mendeley Data, V1, doi: 10.17632/bbb9xbpv22.2
 
 
 The Google Earth Engine Code Editor scripts can be run to generate growing and non-growing season Dynamic World images at https://developers.google.com/earth-engine/guides/playground. We also include the LULC images.
@@ -43,11 +43,17 @@ Leeper, R. D., Rennie, J. & Palecki, M. A. Observational Perspectives from U.S. 
 
 Lehner, B., Verdin, K. & Jarvis, A. HydroSHEDS Technical Documentation. World Wildlife Fund, Washington, DC (2006).
 
+Pianosi, F. & Wagener, T. A simple and efficient method for global sensitivity analysis based oncumulative distribution functions. Environmental Modelling and Software 67, 1–11 (2015).
+
+Pianosi, F., Sarrazin, F. & Wagener, T. A Matlab toolbox for Global Sensitivity Analysis. Environmental Modelling and Software 70, 80–85 (2015).
+
 Sugarbaker, L. J. et al. USGS Circular 1399: The 3D Elevation Program Initiative— A Call for Action. https://pubs.usgs.gov/circ/1399/ (2014).
 
 United States Department of Agriculture. National Agriculture Imagery Program (NAIP) - Catalog. https://catalog.data.gov/dataset/national-agriculture-imagery-program-naip.
 
 USGS. National Water Information System data available on the World Wide Web (USGS Water Data for the Nation). United States Geological Survey waterdata.usgs.gov (2022).
+
+Zadeh, F. K. et al. Comparison of variance-based and moment-independent global sensitivity analysis approaches by application to the SWAT model. Environmental Modelling and Software 91, 210–222 (2017).
 
 
 For more information contact:
