@@ -140,8 +140,8 @@ plot(log(obs), log(grow), col="red",xlab="log(Observed data (cms))",
      ylab="log(Model result (cms))",pch=20)
 title("e)",adj=0, cex.main=2)
 grid()
-points(log(obs),log(non),col="blue",pch=20)
 points(log(obs),log(Flow_NLCD16),col="gold",pch=20)
+points(log(obs),log(non),col="blue",pch=20)
 abline(0,1, lwd=2, col="darkgrey", lty=2)
 legend("bottomright",legend=c("Grow.","Non-g.","NLCD"), col=c("red","blue","gold"), pch=16,bg="white")
 
@@ -156,10 +156,10 @@ plot(date,obs, type='n', xlim=c(as.Date(start, format="%Y-%m-%d"),as.Date(end, f
 grid()
 lines(date,obs,col="black", lwd=4)
 lines(date,grow, col="red", lwd=3)
-lines(date,non, col="blue", lwd=3, lty=2)
-lines(date,Flow_NLCD16,col="gold",lwd=3,lty=3)
+lines(date,non, col="blue", lwd=2, lty=1)
+lines(date,Flow_NLCD16,col="gold",lwd=1,lty=1)
 title("f)",adj=0, cex.main=2)
 
 # Add legend
 legend("topleft", legend=c("Observed","Growing season model", "Non-grow. season model","NLCD model"), 
-       lty=c(1,1,2,3), lwd=c(4,3,3,3), col=c("black","red","blue","gold"),bg="white")
+       lty=c(1,1,1,1), lwd=c(4,3,2,1), col=c("black","red","blue","gold"),bg="white")
