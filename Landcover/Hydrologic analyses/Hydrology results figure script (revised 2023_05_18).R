@@ -38,21 +38,7 @@ round(confint(lm_nlcd,level=0.95),2)
 
 ### Step 3: Make plots
 # Start plots
-windows(6.5,6.5)
-
-# Layout
-# nf <- layout(matrix(c(1,1,2, # top
-#                       3,4,5, # middle
-#                       6,6,6), # bottom
-#                     nrow=3, ncol=3,byrow=TRUE))
-
-nf <- layout(matrix(c(1,1,1,1,2,2, # top
-                      1,1,1,1,2,2,
-                      3,3,4,4,5,6, # middle
-                      3,3,4,4,7,7,
-                      8,8,8,8,8,8,
-                      8,8,8,8,8,8), # bottom
-                    nrow=6, ncol=6,byrow=TRUE))
+windows(6.5,3.5)
 
 ## Specific conductance
 
@@ -64,7 +50,6 @@ plot(lulc_grow$built, medians_all$Specific.conductance, type="n",
      ylim=c(-100,900))
 grid()
 points(lulc_grow$built, medians_all$Specific.conductance,col="firebrick3")
-title("a)",adj=0.02, line=-1.2, cex.main=1.5)
 
 # Nongrowing season points
 points(lulc_non$built, medians_all$Specific.conductance, col="deepskyblue2")
@@ -108,7 +93,6 @@ lines((lulc_non$built), lm_SpeCond_nongrowing$fitted.values, col="deepskyblue2")
 lines((nlcd$urb_tot_OLMH), lm_nlcd$fitted.values, col="gold")
 
 
-
 ### Rock Creek charts
 # load output.rch (growing)
 rch_g <- read.table("output_grow.rch",header=T)
@@ -137,7 +121,8 @@ obs_date <- as.Date(obs_Q_all$Date, format="%Y-%m-%d") + 15 # add 15 days to dis
 
 
 # Make scatterplots (Q)
-par(mar=c(3,3,2,2) + 0.1, mgp=c(2,1,0))
+windows(6.5,2.6)
+par(mar=c(6,3,2,2) + 0.1, mgp=c(2,1,0),mfrow=c(1,3))
 plot(obs_Q[!is.na(obs_Q)], rch_nlcd_Q[!is.na(obs_Q)],xlim=c(0,10.5), ylim=c(0,10.5),pch=c(1),col="gold",
      xlab="Observed (m3/s)", 
      ylab="Model (m3/s)")
@@ -145,9 +130,8 @@ grid()
 points(obs_Q[!is.na(obs_Q)], rch_n_Q[!is.na(obs_Q)],col="deepskyblue2", pch=c(1))
 points(obs_Q[!is.na(obs_Q)], rch_g_Q[!is.na(obs_Q)],col="firebrick3", pch=c(1))
 abline(0,1, lwd=2,col="darkgrey",lty=2)
-# legend("bottomright",c("Grow.(C)", "Grow.(V)", "Non-g.(C)", "Non-g.(V)", "NLCD (C)", "NLCD (V)"), pch=c(1),
-#        col=c("firebrick3","firebrick3","deepskyblue2","deepskyblue2","gold","gold"), bg="white")
-title("b)",adj=0.03, line=-1.2, cex.main=1.5)
+legend("bottomright",legend=c("Growing","Non-gro.","NLCD"),pch=1,col=c("firebrick3","deepskyblue2","gold"),bg="white")
+title("a)",adj=0.03, line=-1.2, cex.main=1.5)
 
 # Make scatterplots (N)
 plot(obs_N[!is.na(obs_N)], rch_nlcd_N[!is.na(obs_N)],xlim=c(0,15000), ylim=c(0,15000),pch=c(1),col="gold",
@@ -157,7 +141,7 @@ grid()
 points(obs_N[!is.na(obs_N)], rch_n_N[!is.na(obs_N)],col="deepskyblue2", pch=c(1))
 points(obs_N[!is.na(obs_N)], rch_g_N[!is.na(obs_N)],col="firebrick3", pch=c(1))
 abline(0,1, lwd=2,col="darkgrey",lty=2)
-title("c)",adj=0.03, line=-1.2, cex.main=1.5)
+title("b)",adj=0.03, line=-1.2, cex.main=1.5)
 
 
 ### Rock Creek barchart
@@ -171,16 +155,18 @@ data1 <- data.frame(model=c("Dyn. World\ngrowing","Dyn. World\nnon-growing","NLC
                     Nyield = c(N_yield_g, N_yield_n, N_yield_nlcd) / 1000) # Since y axis unit is 1000 kg
 
 # Make barplot
-par(mar=c(3,3.5,2,2) + 0.1, mgp=c(2.5,1,0))
+par(mar=c(6,3.5,2,2) + 0.1, mgp=c(2.5,1,0))
 barplot(data1$Nyield ~ data1$model, xlab="", ylim=c(0,115),
         ylab="Annual N yield (*1000 kg)",col=c("firebrick3","deepskyblue2","gold"),las=2)
 grid()
 barplot(data1$Nyield ~ data1$model, xlab="",
         ylab="Annual N yield (*1000 kg)",col=c("firebrick3","deepskyblue2","gold"),las=2,add=T)
-title("d)",adj=0.03, line=-1.2, cex.main=1.5)
+title("c)",adj=0.03, line=-1.2, cex.main=1.5)
 box()
 
-## Difficult Run results
+
+
+### Difficult Run results
 # Load data
 data1 <- read.csv("obs_sim_data (revised).csv")
 obs <- round(data1$Flow_cms_obs,2) 
@@ -190,39 +176,43 @@ Flow_NLCD16 <- round(data1$Flow_NLCD16,2)
 date <- as.Date(data1$Date, format="%m/%d/%Y")
 
 
-
-### Obs/sim plots
+## Obs/sim plots
 # Growing
-par(mar=c(1,3,2,0)+0.1, mgp=c(2,1,0)) # bottom, left, top, right
+windows(6.5,4.5)
+nf <- layout(matrix(c(1,2,3, # top
+                      4,4,4), # bottom
+                    nrow=2, ncol=3,byrow=TRUE))
+
+par(mar=c(3,3,2,1)+0.1, mgp=c(2,1,0)) # bottom, left, top, right
 plot(log10(obs), log10(grow), col=alpha("firebrick3",1),pch=1,
-     xlim=c(-2,2.1), ylim=c(-2,2.1),xaxt='n',
+     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed (m3/s))",
      ylab="log(Model (m3/s))")
-title("e)",adj=0.05, line=-1.2, cex.main=1.5)
+title("a)",adj=0.05, line=-1.2, cex.main=1.5)
 grid()
 abline(0,1, lwd=2, col="darkgrey", lty=2)
+legend("bottomright",legend="Growing",col="firebrick3",pch=1,bg="white")
 
 # Non-growing
-par(mar=c(1,1,2,2)+0.1) # bottom, left, top, right
 plot(log10(obs),log10(non),col=alpha("deepskyblue2",1),pch=1,
-     xlim=c(-2,2.1), ylim=c(-2,2.1),yaxt='n')
+     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed (m3/s))",
+     ylab="log(Model (m3/s))")
 grid()
 abline(0,1, lwd=2, col="darkgrey", lty=2)
+title("b)",adj=0.05, line=-1.2, cex.main=1.5)
+legend("bottomright",legend="Non-gro.",col="deepskyblue2",pch=1,bg="white")
 
 # NLCD
-par(mar=c(3,3,0,8)+0.1,mgp=c(2,1,0)) # bottom, left, top, right
 plot(log10(obs),log10(Flow_NLCD16),col=alpha("gold",1),pch=1,
-     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed (m3/s))",ylab="")
+     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed (m3/s))",
+     ylab="log(Model (m3/s))")
 grid()
 abline(0,1, lwd=2, col="darkgrey", lty=2)
-
-# Add legend
-par(xpd=NA) # Allow plotting outside figure area
-# legend("right",legend=c("Grow.", "Non-g.", "NLCD"), col=c("firebrick3", "deepskyblue2","gold"),pch=1,
-#        bg="white",inset=c(-1,0))
+title("c)",adj=0.05, line=-1.2, cex.main=1.5)
+legend("bottomright",legend="NLCD",col="gold",pch=1,bg="white")
 
 
-# Time series plot (10/1/2015 to 9/30/2016)
-par(mar= c(3, 3, 3, 2) + 0.1, mgp=c(2,1,0),xpd=FALSE) # restore default margins
+## Time series plot (10/1/2015 to 9/30/2016)
+par(mar= c(3, 3, 1, 2) + 0.1, mgp=c(2,1,0)) # restore default margins
 start <- "2015-10-01"
 end <- "2016-09-30"
 
@@ -230,16 +220,13 @@ end <- "2016-09-30"
 plot(date,obs, type='n', xlim=c(as.Date(start, format="%Y-%m-%d"),as.Date(end, format="%Y-%m-%d")),
      ylim=c(0,24), xlab="Date (2016 water year)",
      ylab="Discharge (m3/s)")
-# axis(1,c(as.Date("2016-03-01", format="%Y-%m-%d"), as.Date("2016-04-01", format="%Y-%m-%d"),
-#          as.Date("2016-05-01", format="%Y-%m-%d"), as.Date("2016-06-01", format="%Y-%m-%d")),
-#      format("%m-%Y"),at=c(as.Date("2016-03-01", format="%Y-%m-%d"), as.Date("2016-04-01", format="%Y-%m-%d"),
-#                           as.Date("2016-05-01", format="%Y-%m-%d"), as.Date("2016-06-01", format="%Y-%m-%d")))
+
 grid()
 lines(date,obs,col="grey", lwd=1)
 lines(date,Flow_NLCD16,col="darkgoldenrod2",lwd=1,lty=1)
 lines(date,grow, col="red", lwd=1,lty=2)
 lines(date,non, col="blue", lwd=1, lty=3)
-title("f)",adj=0.01, line=-1.2, cex.main=1.5)
+title("d)",adj=0.01, line=-1.2, cex.main=1.5)
 
 # Add legend
 legend("topright", inset=c(0.658,0),legend=c("Observed","Dyn. World 2016 growing", "Dyn. World 2016 non-gro.","NLCD 2016"), 
