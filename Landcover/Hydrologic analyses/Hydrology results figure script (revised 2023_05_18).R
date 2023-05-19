@@ -124,8 +124,8 @@ obs_date <- as.Date(obs_Q_all$Date, format="%Y-%m-%d") + 15 # add 15 days to dis
 windows(6.5,2.6)
 par(mar=c(6,3,2,2) + 0.1, mgp=c(2,1,0),mfrow=c(1,3))
 plot(obs_Q[!is.na(obs_Q)], rch_nlcd_Q[!is.na(obs_Q)],xlim=c(0,10.5), ylim=c(0,10.5),pch=c(1),col="gold",
-     xlab="Observed (m3/s)", 
-     ylab="Model (m3/s)")
+     xlab="Observed discharge (m3/s)", 
+     ylab="Model discharge (m3/s)")
 grid()
 points(obs_Q[!is.na(obs_Q)], rch_n_Q[!is.na(obs_Q)],col="deepskyblue2", pch=c(1))
 points(obs_Q[!is.na(obs_Q)], rch_g_Q[!is.na(obs_Q)],col="firebrick3", pch=c(1))
@@ -135,8 +135,8 @@ title("a)",adj=0.03, line=-1.2, cex.main=1.5)
 
 # Make scatterplots (N)
 plot(obs_N[!is.na(obs_N)], rch_nlcd_N[!is.na(obs_N)],xlim=c(0,15000), ylim=c(0,15000),pch=c(1),col="gold",
-     xlab="Observed (kg N/month)", 
-     ylab="Model (kg N/month)")
+     xlab="Observed N (kg N/month)", 
+     ylab="Model N (kg N/month)")
 grid()
 points(obs_N[!is.na(obs_N)], rch_n_N[!is.na(obs_N)],col="deepskyblue2", pch=c(1))
 points(obs_N[!is.na(obs_N)], rch_g_N[!is.na(obs_N)],col="firebrick3", pch=c(1))
