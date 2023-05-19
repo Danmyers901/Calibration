@@ -185,8 +185,8 @@ nf <- layout(matrix(c(1,2,3, # top
 
 par(mar=c(3,3,2,1)+0.1, mgp=c(2,1,0)) # bottom, left, top, right
 plot(log10(obs), log10(grow), col=alpha("firebrick3",1),pch=1,
-     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed (m3/s))",
-     ylab="log(Model (m3/s))")
+     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed discharge (m3/s))",
+     ylab="log(Model discharge (m3/s))")
 title("a)",adj=0.05, line=-1.2, cex.main=1.5)
 grid()
 abline(0,1, lwd=2, col="darkgrey", lty=2)
@@ -194,8 +194,8 @@ legend("bottomright",legend="Growing",col="firebrick3",pch=1,bg="white")
 
 # Non-growing
 plot(log10(obs),log10(non),col=alpha("deepskyblue2",1),pch=1,
-     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed (m3/s))",
-     ylab="log(Model (m3/s))")
+     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed discharge (m3/s))",
+     ylab="log(Model discharge (m3/s))")
 grid()
 abline(0,1, lwd=2, col="darkgrey", lty=2)
 title("b)",adj=0.05, line=-1.2, cex.main=1.5)
@@ -203,8 +203,8 @@ legend("bottomright",legend="Non-gro.",col="deepskyblue2",pch=1,bg="white")
 
 # NLCD
 plot(log10(obs),log10(Flow_NLCD16),col=alpha("gold",1),pch=1,
-     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed (m3/s))",
-     ylab="log(Model (m3/s))")
+     xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed discharge (m3/s))",
+     ylab="log(Model discharge (m3/s))")
 grid()
 abline(0,1, lwd=2, col="darkgrey", lty=2)
 title("c)",adj=0.05, line=-1.2, cex.main=1.5)
