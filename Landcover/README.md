@@ -4,7 +4,7 @@ These scripts are from the Myers et al. study with seasonal landcover variation 
 
 They use the following dataset:
 
-Myers, Daniel; Jones, David; Oviedo-Vargas, Diana; Schmit, John Paul; Ficklin, Darren; Zhang, Xuesong (2022), “Seasonal landcover variation and environmental modeling data”, Mendeley Data, V1, doi: 10.17632/bbb9xbpv22.3
+Myers, Daniel; Jones, David; Oviedo-Vargas, Diana; Schmit, John Paul; Ficklin, Darren; Zhang, Xuesong (2022), “Seasonal landcover variation and environmental modeling data”, Mendeley Data, V3, doi: 10.17632/bbb9xbpv22.3
 
 
 The Google Earth Engine Code Editor scripts can be run to generate growing and non-growing season Dynamic World images at https://developers.google.com/earth-engine/guides/playground. We also include the LULC images.
