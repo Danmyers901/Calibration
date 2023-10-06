@@ -1,0 +1,133 @@
+// Charting Class Probabilities Over Time
+// Dan Myers, 6/14/2023     
+
+// First add the watershed shapefile (e.g., MONO_BUCK_shed_4326) to the assets and import it as 'table'.
+
+// Add shapefile to map
+Map.addLayer(table, {color: 'red'}, 'Selected Location');
+Map.centerObject(table, 13);
+
+// Filter the Dynamic World collection for the time period and
+// location of interest.
+var startDate = ee.Date('2015-01-01');
+var endDate = ee.Date('2023-06-14');
+
+var dw = ee.ImageCollection('GOOGLE/DYNAMICWORLD/V1')
+  .filterDate(startDate, endDate)
+  .filterBounds(table);
+
+// Assign probability band names
+var probabilityBands = ['label'];
+
+// Select probability bands.
+var dwTimeSeries = dw.select(probabilityBands);
+
+// Composite images on the same day (https://gis.stackexchange.com/questions/352890/how-to-compute-lst-every-3rd-day-for-19-years-earth-engine)
+var days = endDate.difference(startDate, 'days')
+var daysStep = 1
+var timeSeries = ee.ImageCollection(
+  ee.List.sequence(0, days.subtract(1), daysStep)
+    .map(function (offsetDays) {
+      var start = startDate.advance(offsetDays, 'days')
+      var end = start.advance(daysStep, 'days')
+      var composite = dwTimeSeries
+        .filterDate(start, end)
+        .mode() // You need to decide how to combine the images (Note this is mode for label composite)
+      return composite
+        .set('system:time_start', start.millis())
+        .set('empty', composite.bandNames().size().eq(0))
+    })
+  ).filterMetadata('empty', 'equals', 0)
+
+// Create function
+function addDW(image) {
+  var water0 = image.select('label').eq(0).rename("water0");
+  var trees1 = image.select('label').eq(1).rename("trees1");
+  var grass2 = image.select('label').eq(2).rename("grass2");
+  var flood3 = image.select('label').eq(3).rename("flood3");
+  var crops4 = image.select('label').eq(4).rename("crops4");
+  var shrub5 = image.select('label').eq(5).rename("shrub5");
+  var built6 = image.select('label').eq(6).rename("built6");
+  var bare7 = image.select('label').eq(7).rename("bare7");
+  var snow8 = image.select('label').eq(8).rename("snow8");
+  var imageR = image.addBands(water0).addBands(trees1).addBands(grass2).addBands(flood3).addBands(crops4).addBands(shrub5).addBands(built6).addBands(bare7).addBands(snow8);
+  return imageR;
+}
+
+var withDW = timeSeries.map(addDW);
+
+// Remove unneeded 'label' band (https://gis.stackexchange.com/questions/345252/removing-a-specific-band-from-an-image-composite-with-hundreds-of-bands-in-googl#:~:text=In%20order%20to%20remove%20particular,bandNames().)
+function removeLabel(DWImage) {
+  return DWImage.select(
+    DWImage.bandNames().filter(
+      ee.Filter.stringEndsWith('item','label').not()));
+}
+
+var noLabel = withDW.map(removeLabel);
+
+
+// Plot the time series.
+var chart = ui.Chart.image.series({
+  imageCollection: noLabel,
+  region: table,
+  scale: 10,
+  reducer: ee.Reducer.sum(),
+});
+print(chart);
+
+// Refine the chart.
+
+// A helper function  to set the label, color, and style properties
+// for each of the 9 series in the chart.
+function lineStyle(label, color) {
+  var style_dict = {
+      labelInLegend: label,
+      color: color,
+      lineWidth: 2, 
+      pointSize: 3
+  };
+  return style_dict;
+}
+
+// We now create the chart and call setOptions with a dictionary of
+// configuration options.
+var chart = ui.Chart.image.series({
+  imageCollection: noLabel,
+  region: table,
+  scale: 10
+}).setOptions({
+  vAxis: {
+    title: 'Class probabilities',
+    viewWindow: {min: 0, max: 1}},
+  interpolateNulls: true,
+  series: {
+              0: lineStyle('Bare', '#A59B8F'),
+              1: lineStyle('Built', '#C4281B'),
+              2: lineStyle('Crops', '#E49635'),
+              3: lineStyle('Flooded_vegetation', '#7A87C6'),
+              4: lineStyle('Grass', '#88B053'),
+              5: lineStyle('Shrub and scrub', '#DFC35A'),
+              6: lineStyle('Snow and ice', '#B39FE1'),
+              7: lineStyle('Trees', '#397D49'),
+              8: lineStyle('Water', '#419BDF')}
+});
+print(chart);
+
+
+// Output the total area (pixel count) for each image to later choose only days with full coverage of the watershed
+var chart = ui.Chart.image.series({
+  imageCollection: noLabel,
+  region: table,
+  scale: 10,
+  reducer: ee.Reducer.count()
+});
+print(chart);
+
+
+
+// Finally, open the charts in the console and download the CSV file with the watershed count of pixels
+// for each class (columns) and date (rows). Remove incomplete days as those that don't have the full count
+// of pixels in the last chart. Calculate proportions by dividing the class by sum of all classes.
+
+// This script was adapted from the Google / World Resources Institute / National Geographic Society tutorial
+// "Introduction to Dynamic World (Part 3) - Exploring Time Series" Apache 2.0 at https://developers.google.com/earth-engine/tutorials/community/introduction-to-dynamic-world-pt-3
