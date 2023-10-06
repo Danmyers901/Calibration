@@ -8,11 +8,8 @@ Daniel T. Myers1* (ORCID 0000-0002-1932-5775), Diana Oviedo-Vargas1, Melinda Dan
 1 Stroud Water Research Center, 970 Spencer Road, Avondale, Pennsylvania 19311, USA
 2 Department of Geography, Indiana University Bloomington, Student Building 120, 701 E. Kirkwood Avenue, Bloomington, IN 47405, USA
 * Corresponding author (dmyers@stroudcenter.org)
-These scripts are from the Myers et al. study with seasonal landcover variation and environmental modeling.
 
-# They use the following dataset: (ENTER DATASET NAME HERE)
-
-
+They use the following dataset: Myers, Daniel; Oviedo-Vargas, Diana; Daniels, Melinda; Aryal, Yog (2023), “Pixel class probabilities investigations data”, Mendeley Data, V1, doi: 10.17632/zyds7t4pst.1
 
 The Google Earth Engine Code Editor scripts can be run to generate growing and non-growing season Dynamic World images at https://developers.google.com/earth-engine/guides/playground. We also include the LULC images.
 
