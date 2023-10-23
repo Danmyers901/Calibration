@@ -3,9 +3,10 @@
 
 library(dplyr)
 library(scales)
+library(Metrics)
 
 # Set working directory
-setwd("R:/NPS_NCRN_VitalSigns/Data/GIS/Projects/AGU_study/Revision/Myers et al. Mendeley Data (revised)/Hydrologic analyses")
+# setwd("R:/NPS_NCRN_VitalSigns/Data/GIS/Projects/AGU_study/Revision/Myers et al. Mendeley Data (revised)/Hydrologic analyses")
 # setwd("C:/GIS/Projects/AGU_study/Revision/Myers et al. Mendeley Data (revised)/Hydrologic analyses")
 
 ### Step 1: Load data
@@ -18,27 +19,43 @@ lulc_non <- read.csv("Dynamic_World_LULC_percent_area_Nongrowing_season (revised
 nlcd <- read.csv("watersheds_nlcd16_stats (revised 2023_02_09).csv")
 
 
-### Step 2: Create regression models
-# Specific conductance
-lm_SpeCond_growing <- lm(medians_all$Specific.conductance ~ lulc_grow$built) 
+### Step 2: Create regression models (quadratic)
+# Growing
+x1 <- lulc_grow$built
+y <- medians_all$Specific.conductance
+lm_SpeCond_growing <- lm(y ~ x1+I(x1^2))
+myPredict1 <- predict(lm_SpeCond_growing) 
+ix1 <- sort(x1,index.return=T)$ix
 summary(lm_SpeCond_growing)
 AIC(lm_SpeCond_growing)
+rmse(medians_all$Specific.conductance, lm_SpeCond_growing$fitted.values)
 round(confint(lm_SpeCond_growing,level=0.95),2)
 
-lm_SpeCond_nongrowing <- lm(medians_all$Specific.conductance ~ lulc_non$built)
+# Non-growing
+x2 <- lulc_non$built
+y <- medians_all$Specific.conductance
+lm_SpeCond_nongrowing <- lm(y ~ x2+I(x2^2))
+myPredict2 <- predict(lm_SpeCond_nongrowing) 
+ix2 <- sort(x2,index.return=T)$ix
 summary(lm_SpeCond_nongrowing)
 AIC(lm_SpeCond_nongrowing)
+rmse(medians_all$Specific.conductance, lm_SpeCond_nongrowing$fitted.values)
 round(confint(lm_SpeCond_nongrowing,level=0.95),2)
 
-lm_nlcd <- lm(medians_all$Specific.conductance ~ nlcd$urb_tot_OLMH) 
+# NLCD
+x3 <- nlcd$urb_tot_OLMH
+y <- medians_all$Specific.conductance
+lm_nlcd <- lm(y ~ x3+I(x3^2))
+myPredict3 <- predict(lm_nlcd) 
+ix3 <- sort(x3,index.return=T)$ix
 summary(lm_nlcd)
 AIC(lm_nlcd)
+rmse(medians_all$Specific.conductance, lm_nlcd$fitted.values)
 round(confint(lm_nlcd,level=0.95),2)
-
 
 ### Step 3: Make plots
 # Start plots
-windows(6.5,3.5)
+windows(6.5,4)
 
 ## Specific conductance
 
@@ -47,19 +64,19 @@ par(mar=c(3,3,2,2) + 0.1, mgp=c(2,1,0))
 # Growing season points
 plot(lulc_grow$built, medians_all$Specific.conductance, type="n",
      xlab = "Built or developed landuse (%)", ylab="Specific conductance (uS/cm)",
-     ylim=c(-100,900))
+     ylim=c(0,900),yaxs="i")
 grid()
-points(lulc_grow$built, medians_all$Specific.conductance,col="firebrick3")
+points(lulc_grow$built, medians_all$Specific.conductance,col="firebrick4")
 
 # Nongrowing season points
-points(lulc_non$built, medians_all$Specific.conductance, col="deepskyblue2")
+points(lulc_non$built, medians_all$Specific.conductance, col="deepskyblue3")
 
 # NLCD 2016 points
-points(nlcd$urb_tot_OLMH, medians_all$Specific.conductance, col="gold")
+points(nlcd$urb_tot_OLMH, medians_all$Specific.conductance, col="darkgoldenrod2")
 
 # Legend
-legend("bottomright",legend=c("Dyn. World 2016 growing", "Dyn. World 2016 non-gro.", "NLCD 2016"), col=c("firebrick3", "deepskyblue2","gold"),pch=1,
-       bg="white",y.intersp=0.9)
+legend("bottomright",legend=c("Dyn. World 2016 growing", "Dyn. World 2016 non-gro.", "NLCD 2016"), 
+       col=c("firebrick4", "deepskyblue3","darkgoldenrod2"),pch=1, bg="white",y.intersp=0.9)
 
 
 ## Plot 95% confidence intervals
@@ -68,29 +85,29 @@ x=lulc_grow$built
 model= lm_SpeCond_growing
 pr <- predict(model, interval='confidence')
 xpr <- data.frame(x=x,pr=pr) %>% arrange(x)
-lines(xpr$x, xpr$pr.lwr,col="firebrick3",lty=3,lwd=0.5)
-lines(xpr$x, xpr$pr.upr,col="firebrick3",lty=3,lwd=0.5)
+lines(xpr$x, xpr$pr.lwr,col="firebrick4",lty=2,lwd=0.5)
+lines(xpr$x, xpr$pr.upr,col="firebrick4",lty=2,lwd=0.5)
 
 # Nongrowing
 x=lulc_non$built
 model= lm_SpeCond_nongrowing
 pr <- predict(model, interval='confidence')
 xpr <- data.frame(x=x,pr=pr) %>% arrange(x)
-lines(xpr$x, xpr$pr.lwr,col="deepskyblue2",lty=3,lwd=0.5)
-lines(xpr$x, xpr$pr.upr,col="deepskyblue2",lty=3,lwd=0.5)
+lines(xpr$x, xpr$pr.lwr,col="deepskyblue3",lty=2,lwd=0.5)
+lines(xpr$x, xpr$pr.upr,col="deepskyblue3",lty=2,lwd=0.5)
 
 # NLCD
 x=nlcd$urb_tot_OLMH
 model= lm_nlcd
 pr <- predict(model, interval='confidence')
 xpr <- data.frame(x=x,pr=pr) %>% arrange(x)
-lines(xpr$x, xpr$pr.lwr,col="gold",lty=3,lwd=0.5)
-lines(xpr$x, xpr$pr.upr,col="gold",lty=3,lwd=0.5)
+lines(xpr$x, xpr$pr.lwr,col="darkgoldenrod2",lty=2,lwd=0.5)
+lines(xpr$x, xpr$pr.upr,col="darkgoldenrod2",lty=2,lwd=0.5)
 
 # Add models
-lines((lulc_grow$built), lm_SpeCond_growing$fitted.values, col="firebrick3") 
-lines((lulc_non$built), lm_SpeCond_nongrowing$fitted.values, col="deepskyblue2")
-lines((nlcd$urb_tot_OLMH), lm_nlcd$fitted.values, col="gold")
+lines(x1[ix1], myPredict1[ix1], col="firebrick4", lwd=2 ) 
+lines(x2[ix2], myPredict2[ix2], col="deepskyblue3", lwd=2 )  
+lines(x3[ix3], myPredict3[ix3], col="darkgoldenrod2", lwd=2 )  
 
 
 ### Rock Creek charts
