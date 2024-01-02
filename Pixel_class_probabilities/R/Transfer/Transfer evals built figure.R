@@ -3,7 +3,7 @@
 
 
 # Set working directory
-setwd("R:/NPS_NCRN_VitalSigns/Analyses/Projects/AGU23/Scripts/R/Transfer/")
+setwd("Transfer/")
 
 # Load packages
 library(raster)
@@ -15,13 +15,6 @@ library(sf)
 library(tmap)
 library(tmaptools)
 
-# Start plot
-windows(6.5,6.5)
-par(mar=c(1,1,1,1))
-nf <- layout(matrix(c(1,2, # top
-                      3,4, # middle
-                      5,5), # bottom
-                    nrow=3, ncol=2,byrow=TRUE))
 
 
 ### a) NLCD ###########################################################
@@ -56,10 +49,9 @@ nlcd_urb <- nlcd_open + nlcd_low + nlcd_med + nlcd_high
 plot(nlcd_urb, col=c("#FFFFFF","#E8D1D1","#E29E8C","#ff0000","#B50000"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-legend("topright",legend=c("Open","Low","Medium","High"), fill=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),bg="white")
-title("a)",adj=0.02, line=-1.2, cex.main=1.5)
+legend("topright",legend=c("Open","Low","Medium","High"), fill=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),bg="white",cex=0.8)
+title("q)",adj=0.02, line=-1.2, cex.main=1.5)
 title("NLCD19 urban classes",adj=0.02, line=-13.9, cex.main=1)
-
 
 
 
@@ -81,9 +73,8 @@ plot(dw_comp_urb, col='#C4281B',legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend="Built", fill=c('#C4281B'),bg="white")
-title("b)",adj=0.02, line=-1.2, cex.main=1.5)
+title("r)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 built class",adj=0.02, line=-13.9, cex.main=1)
-
 
 
 
@@ -98,7 +89,7 @@ dw_urb <- dw * dw_comp_urb
 plot(dw_urb,legend=T,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-title("c)",adj=0.02, line=-1.2, cex.main=1.5)
+title("s)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 built probability",adj=0.02, line=-13.9, cex.main=1)
 
 
@@ -135,8 +126,8 @@ dw_pp_urb <- dw_open + dw_low + dw_med + dw_high
 plot(dw_pp_urb, col=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-legend("topright",legend=c("Open","Low","Medium","High"), fill=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),bg="white")
-title("d)",adj=0.02, line=-1.2, cex.main=1.5)
+legend("topright",legend=c("Open","Low","Medium","High"), fill=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),bg="white",cex=0.8)
+title("t)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.02, line=-13.9, cex.main=1)
 
 
@@ -217,15 +208,8 @@ areas_df <- data.frame(NLCD = c(nlcd_high_area, nlcd_med_area, nlcd_low_area, nl
                        DW = c(dw_high_area, dw_med_area, dw_low_area, dw_open_area, dw_all_area))
 rownames(areas_df) <- c("High","Med","Low","Open","All urban")
 
-# Make barplot
-par(mar=c(3,3,1,3.5) + 0.1,mgp=c(2,1,0))
-graphics::barplot(t(as.matrix(areas_df)),beside=T,col=NA,border=NA,xlab="Urban type",ylab="% watershed area",
-                  ylim=c(0,35))
-grid()
-box()
-graphics::barplot(t(as.matrix(areas_df)),beside=T,legend=T,add=T,
-                  args.legend = list(bg="white",x="topleft",inset=c(0.1,0)))
-title("e)",adj=0.02, line=-1.2, cex.main=1.5)
+# Print areas
+print(areas_df)
 
 
 
@@ -296,4 +280,6 @@ acc_mat_dis[,5] <- c(rowSums(acc_mat[1:4,]),sum(acc_mat),NA)
 acc_mat_dis[,6] <- round(c(t(users_acc),NA,overall_acc),2)
 colnames(acc_mat_dis) <- c("NLCD_open", "NLCD_low", "NLCD_med", "NLCD_high","Total","User's Accuracy")
 rownames(acc_mat_dis) <- c("DW_open","DW_low","DW_med","DW_high","Total", "Producer's Accuracy")
-acc_mat_dis
+
+print(acc_mat_dis)
+setwd("../")
