@@ -3,7 +3,7 @@
 
 
 # Set working directory
-setwd("R:/NPS_NCRN_VitalSigns/Analyses/Projects/AGU23/Scripts/R/Transfer/")
+setwd("Transfer/")
 
 # Load packages
 library(raster)
@@ -15,13 +15,6 @@ library(sf)
 library(tmap)
 library(tmaptools)
 
-# Start plot
-windows(6.5,6.5)
-par(mar=c(1,1,1,1))
-nf <- layout(matrix(c(1,2, # top
-                      3,4, # middle
-                      5,5), # bottom
-                    nrow=3, ncol=2,byrow=TRUE))
 
 
 ### a) NLCD ###########################################################
@@ -30,9 +23,6 @@ nlcd_c <- raster("align2_nlcd.tif")
 shed_orig <- st_read("MONO_BUCK_shed.shp")
 shed <- st_transform(shed_orig, crs=st_crs(nlcd_c))
 
-# Crop to watershed
-# nlcd_m <- crop(nlcd,shed)
-# nlcd_c <- mask(nlcd_m,shed)
 
 # Extract forest and reclassify
 nlcd_dec <- reclassify(nlcd_c, matrix(c(0,0,0,
@@ -55,8 +45,8 @@ nlcd_for <- nlcd_dec + nlcd_eve + nlcd_mix
 plot(nlcd_for, col=c("#FFFFFF","#85C77E","#38814E","#D4E7B0"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white")
-title("a)",adj=0.02, line=-1.2, cex.main=1.5)
+legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
+title("m)",adj=0.02, line=-1.2, cex.main=1.5)
 title("NLCD19 forest classes",adj=0.02, line=-13.9, cex.main=1)
 
 
@@ -78,7 +68,7 @@ plot(dw_comp_for, col=c("#FFFFFF","#397D49"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend="Trees", fill=c("#397D49"),bg="white")
-title("b)",adj=0.02, line=-1.2, cex.main=1.5)
+title("n)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree class",adj=0.02, line=-13.9, cex.main=1)
 
 
@@ -93,7 +83,7 @@ dw_tree <- dw * dw_comp_for
 plot(dw_tree,legend=T,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-title("c)",adj=0.02, line=-1.2, cex.main=1.5)
+title("o)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree probability",adj=0.02, line=-13.9, cex.main=1)
 
 
@@ -125,8 +115,8 @@ dw_pp_for <- dw_dec + dw_eve + dw_mix
 plot(dw_pp_for, col=c("#FFFFFF","#85C77E","#38814E","#D4E7B0"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white")
-title("d)",adj=0.02, line=-1.2, cex.main=1.5)
+legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
+title("p)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.02, line=-13.9, cex.main=1)
 
 
@@ -198,15 +188,8 @@ areas_df <- data.frame(NLCD = c(nlcd_eve_area, nlcd_mix_area, nlcd_dec_area, nlc
                        DW = c(dw_eve_area, dw_mix_area, dw_dec_area, dw_all_area))
 rownames(areas_df) <- c("Evergreen","Mixed","Deciduous","All tree")
 
-# Make barplot
-par(mar=c(3,3,1,3.5) + 0.1,mgp=c(2,1,0))
-graphics::barplot(t(as.matrix(areas_df)),beside=T,col=NA,border=NA,xlab="Forest type",ylab="% watershed area",
-                  ylim=c(0,60))
-grid()
-box()
-graphics::barplot(t(as.matrix(areas_df)),beside=T,legend=T,add=T,
-                  args.legend = list(bg="white",x="topleft",inset=c(0.1,0)))
-title("e)",adj=0.02, line=-1.2, cex.main=1.5)
+# Print areas
+print(areas_df)
 
 
 
@@ -263,4 +246,6 @@ acc_mat_dis[,4] <- c(rowSums(acc_mat[1:3,]),sum(acc_mat),NA)
 acc_mat_dis[,5] <- round(c(t(users_acc),NA,overall_acc),2)
 colnames(acc_mat_dis) <- c("NLCD_deciduous", "NLCD_mixed", "NLCD_evergreen","Total","User's Accuracy")
 rownames(acc_mat_dis) <- c("DW_deciduous","DW_mixed","DW_evergreen","Total", "Producer's Accuracy")
-acc_mat_dis
+
+print(acc_mat_dis)
+setwd("../")
