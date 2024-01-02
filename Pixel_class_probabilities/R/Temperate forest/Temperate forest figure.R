@@ -4,7 +4,7 @@
 # First, align the DW pixel probabilities, DW composite, and NLCD rasters in QGIS.
 
 # Set working directory
-setwd("R:/NPS_NCRN_VitalSigns/Analyses/Projects/AGU23/Scripts/R/Temperate forest/")
+setwd("Temperate forest/")
 
 # Load packages
 library(raster)
@@ -19,19 +19,19 @@ library(tmaptools)
 # Start plot
 windows(6.5,6.5)
 par(mar=c(1,1,1,1))
-nf <- layout(matrix(c(1,2, # top
-                      3,4, # middle
-                      5,5), # bottom
-                      nrow=3, ncol=2,byrow=TRUE))
+
+nf <- layout(matrix(c(1,2,3,4, # top
+                      5,6,7,8,
+                      9,10,11,12,
+                      13,14,15,16,
+                      17,18,19,20), # bottom
+                    nrow=5, ncol=4,byrow=TRUE))
 
 
 ### a) NLCD ###########################################################
 # Load data
 nlcd_c <- raster("align_NLCD_allSFQC_mask.tif")
 shed <- st_read("shed_sfqc.shp")
-# Crop to watershed
-# nlcd_m <- crop(nlcd,shed)
-# nlcd_c <- mask(nlcd_m,shed)
 
 # Extract forest and reclassify
 nlcd_dec <- reclassify(nlcd_c, matrix(c(0,0,0,
@@ -54,7 +54,7 @@ nlcd_for <- nlcd_dec + nlcd_eve + nlcd_mix
 plot(nlcd_for, col=c("#FFFFFF","#85C77E","#38814E","#D4E7B0"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white")
+legend("topright",legend=c("Decid.","Everg.","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
 title("a)",adj=0.02, line=-1.2, cex.main=1.5)
 title("NLCD19 forest classes",adj=0.02, line=-13.9, cex.main=1)
 
@@ -121,7 +121,7 @@ dw_pp_for <- dw_dec + dw_eve + dw_mix
 plot(dw_pp_for, col=c("#85C77E","#38814E","#D4E7B0"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white")
+legend("topright",legend=c("Decid.","Everg.","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
 title("d)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.02, line=-13.9, cex.main=1)
 
@@ -194,15 +194,8 @@ areas_df <- data.frame(NLCD = c(nlcd_eve_area, nlcd_mix_area, nlcd_dec_area, nlc
                        DW = c(dw_eve_area, dw_mix_area, dw_dec_area, dw_all_area))
 rownames(areas_df) <- c("Evergreen","Mixed","Deciduous","All tree")
 
-# Make barplot
-par(mar=c(3,3,1,3.5) + 0.1,mgp=c(2,1,0))
-graphics::barplot(t(as.matrix(areas_df)),beside=T,col=NA,border=NA,xlab="Forest type",ylab="% watershed area",
-        ylim=c(0,100))
-grid()
-box()
-graphics::barplot(t(as.matrix(areas_df)),beside=T,legend=T,add=T,
-        args.legend = list(bg="white",x="topleft",inset=c(0.1,0)))
-title("e)",adj=0.02, line=-1.2, cex.main=1.5)
+# Print areas
+print(areas_df)
 
 
 
@@ -259,4 +252,6 @@ acc_mat_dis[,4] <- c(rowSums(acc_mat[1:3,]),sum(acc_mat),NA)
 acc_mat_dis[,5] <- round(c(t(users_acc),NA,overall_acc),2)
 colnames(acc_mat_dis) <- c("NLCD_deciduous", "NLCD_mixed", "NLCD_evergreen","Total","User's Accuracy")
 rownames(acc_mat_dis) <- c("DW_deciduous","DW_mixed","DW_evergreen","Total", "Producer's Accuracy")
-acc_mat_dis
+
+print(acc_mat_dis)
+setwd("../")
