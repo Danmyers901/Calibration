@@ -4,7 +4,7 @@
 # First, align the DW pixel probabilities, DW composite, and NLCD rasters in QGIS.
 
 # Set working directory
-setwd("R:/NPS_NCRN_VitalSigns/Analyses/Projects/AGU23/Scripts/R/Tropical forest/")
+setwd("Tropical forest/")
 
 # Load packages
 library(raster)
@@ -16,13 +16,6 @@ library(sf)
 library(tmap)
 library(tmaptools)
 
-# Start plot
-windows(6.5,6.5)
-par(mar=c(1,1,1,1))
-nf <- layout(matrix(c(1,2, # top
-                      3,4, # middle
-                      5,5), # bottom
-                    nrow=3, ncol=2,byrow=TRUE))
 
 
 ### a) SINAC ###########################################################
@@ -45,8 +38,8 @@ shed <- st_read("guan_np_fixed_geoms.shp")
 plot(sinac, col=c("#FFFFFF","#33a02c","#fdbf6f","#b2df8a"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-legend("topright",legend=c("Mature","Deciduous","Secondary"), fill=c("#33a02c","#fdbf6f","#b2df8a"),bg="white")
-title("a)",adj=0.02, line=-1.2, cex.main=1.5)
+legend("topright",legend=c("Mature","Decid.","Second."), fill=c("#33a02c","#fdbf6f","#b2df8a"),bg="white",cex=0.8)
+title("e)",adj=0.02, line=-1.2, cex.main=1.5)
 title("SINAC topical forest classes",adj=0.98, line=-13.9, cex.main=1)
 
 
@@ -65,9 +58,9 @@ plot(dw_comp_for, col=c("#FFFFFF","#397D49"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend="Trees", fill=c("#397D49"),bg="white")
-title("b)",adj=0.02, line=-1.2, cex.main=1.5)
+title("f)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 trees",adj=0.98, line=-13.9, cex.main=1)
-title("No \ndata",adj=0.8, line=-7, cex.main=1)
+title("No \ndata",adj=0.9, line=-5, cex.main=1)
 
 
 
@@ -83,9 +76,9 @@ dw_tree <- dw * dw_comp_for
 plot(dw_tree,legend=T,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-title("c)",adj=0.02, line=-1.2, cex.main=1.5)
+title("g)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree probability",adj=0.98, line=-13.9, cex.main=1)
-title("No \ndata",adj=0.8, line=-7, cex.main=1)
+title("No \ndata",adj=0.9, line=-5, cex.main=1)
 
 
 
@@ -115,10 +108,10 @@ dw_pp_for <- dw_dec + dw_sec + dw_mad
 plot(dw_pp_for, col=c("#FFFFFF","#33a02c","#fdbf6f","#b2df8a"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-legend("topright",legend=c("Mature","Deciduous","Secondary"), fill=c("#33a02c","#fdbf6f","#b2df8a"),bg="white")
-title("d)",adj=0.02, line=-1.2, cex.main=1.5)
+legend("topright",legend=c("Mature","Decid.","Second."), fill=c("#33a02c","#fdbf6f","#b2df8a"),bg="white",cex=0.8)
+title("h)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.98, line=-13.9, cex.main=1)
-title("No \ndata",adj=0.8, line=-7, cex.main=1)
+title("No \ndata",adj=0.9, line=-5, cex.main=1)
 
 
 
@@ -180,16 +173,8 @@ areas_df <- data.frame(SINAC = c(sinac_dec_area, sinac_mad_area, sinac_sec_area,
                        DW = c(dw_dec_area, dw_mad_area, dw_sec_area, dw_all_area))
 rownames(areas_df) <- c("Deciduous","Mature","Secondary","All tree")
 
-# Make barplot
-par(mar=c(3,3,1,3.5) + 0.1,mgp=c(2,1,0))
-graphics::barplot(t(as.matrix(areas_df)),beside=T,col=NA,border=NA,xlab="Forest type",ylab="% park area (with DW22 coverage)",
-                  ylim=c(0,100))
-grid()
-box()
-graphics::barplot(t(as.matrix(areas_df)),beside=T,legend=T,add=T,
-                  args.legend = list(bg="white",x="topleft",inset=c(0.1,0)))
-title("e)",adj=0.02, line=-1.2, cex.main=1.5)
-
+# Print data frame
+print(areas_df)
 
 
 ### Make accuracy matrix ######################################################
@@ -244,3 +229,6 @@ acc_mat_dis[,4] <- c(rowSums(acc_mat[1:3,]),sum(acc_mat),NA)
 acc_mat_dis[,5] <- round(c(t(users_acc),NA,overall_acc),2)
 colnames(acc_mat_dis) <- c("SINAC_deciduous", "SINAC_secondary", "SINAC_mature","Total","User's Accuracy")
 rownames(acc_mat_dis) <- c("DW_deciduous","DW_secondary","DW_mature","Total", "Producer's Accuracy")
+
+print(acc_mat_dis)
+setwd("../")
