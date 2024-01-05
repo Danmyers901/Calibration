@@ -244,14 +244,14 @@ plot(date,obs, type='n', xlim=c(as.Date(start, format="%Y-%m-%d"),as.Date(end, f
 
 grid()
 lines(date,obs,col="darkgrey", lwd=4)
-lines(date,Flow_NLCD16,col="darkgoldenrod2",lwd=1.5,lty=1)
-lines(date,grow, col="firebrick3", lwd=1.5,lty=2)
-lines(date,non, col="deepskyblue2", lwd=1.5, lty=3)
+lines(date,Flow_NLCD16,col="darkgoldenrod2",lwd=2,lty=1)
+lines(date,grow, col="firebrick3", lwd=2,lty=2)
+lines(date,non, col="deepskyblue2", lwd=2, lty=3)
 title("d)",adj=0.01, line=-1.2, cex.main=1.5)
 
 # Add legend
 legend("topright", inset=c(0.658,0),legend=c("Observed","Dyn. World 2016 growing", "Dyn. World 2016 non-gro.","NLCD 2016"), 
-       lty=c(1,2,3,1), lwd=c(4,1.5,1.5,1.5), col=c("darkgrey","firebrick3","deepskyblue2","darkgoldenrod2"),bg="white")
+       lty=c(1,2,3,1), lwd=c(4,2,2,2), col=c("darkgrey","firebrick3","deepskyblue2","darkgoldenrod2"),bg="white")
 
 # Stop printing
 dev.off()
