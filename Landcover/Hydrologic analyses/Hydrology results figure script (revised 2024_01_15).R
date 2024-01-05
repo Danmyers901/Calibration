@@ -194,38 +194,42 @@ date <- as.Date(data1$Date, format="%m/%d/%Y")
 
 
 ## Obs/sim plots
+# Start printing
+png("case3.png",bg="white",res=600,width=6.5,height=6.5,units="in")
+
 # Growing
-windows(6.5,4.5)
+# windows(6.5,6.5)
 nf <- layout(matrix(c(1,2,3, # top
+                      4,4,4,
                       4,4,4), # bottom
-                    nrow=2, ncol=3,byrow=TRUE))
+                    nrow=3, ncol=3,byrow=TRUE))
 
 par(mar=c(3,3,2,1)+0.1, mgp=c(2,1,0)) # bottom, left, top, right
-plot(log10(obs), log10(grow), col=alpha("firebrick3",1),pch=1,
+plot(log10(obs), log10(grow), col=alpha("firebrick3",0.1),pch=16,
      xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed discharge (m3/s))",
      ylab="log(Model discharge (m3/s))")
 title("a)",adj=0.05, line=-1.2, cex.main=1.5)
 grid()
 abline(0,1, lwd=2, col="darkgrey", lty=2)
-legend("bottomright",legend="Growing",col="firebrick3",pch=1,bg="white")
+legend("bottomright",legend="Growing",col="firebrick3",pch=16,bg="white")
 
 # Non-growing
-plot(log10(obs),log10(non),col=alpha("deepskyblue2",1),pch=1,
+plot(log10(obs),log10(non),col=alpha("deepskyblue2",0.1),pch=16,
      xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed discharge (m3/s))",
      ylab="log(Model discharge (m3/s))")
 grid()
 abline(0,1, lwd=2, col="darkgrey", lty=2)
 title("b)",adj=0.05, line=-1.2, cex.main=1.5)
-legend("bottomright",legend="Non-gro.",col="deepskyblue2",pch=1,bg="white")
+legend("bottomright",legend="Non-gro.",col="deepskyblue2",pch=16,bg="white")
 
 # NLCD
-plot(log10(obs),log10(Flow_NLCD16),col=alpha("gold",1),pch=1,
+plot(log10(obs),log10(Flow_NLCD16),col=alpha("darkgoldenrod2",0.2),pch=16,
      xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed discharge (m3/s))",
      ylab="log(Model discharge (m3/s))")
 grid()
 abline(0,1, lwd=2, col="darkgrey", lty=2)
 title("c)",adj=0.05, line=-1.2, cex.main=1.5)
-legend("bottomright",legend="NLCD",col="gold",pch=1,bg="white")
+legend("bottomright",legend="NLCD",col="darkgoldenrod2",pch=16,bg="white")
 
 
 ## Time series plot (10/1/2015 to 9/30/2016)
@@ -235,16 +239,19 @@ end <- "2016-09-30"
 
 ### Time series plot
 plot(date,obs, type='n', xlim=c(as.Date(start, format="%Y-%m-%d"),as.Date(end, format="%Y-%m-%d")),
-     ylim=c(0,24), xlab="Date (2016 water year)",
+     ylim=c(0,22), xlab="Date (2016 water year)",
      ylab="Discharge (m3/s)")
 
 grid()
-lines(date,obs,col="grey", lwd=1)
-lines(date,Flow_NLCD16,col="darkgoldenrod2",lwd=1,lty=1)
-lines(date,grow, col="red", lwd=1,lty=2)
-lines(date,non, col="blue", lwd=1, lty=3)
+lines(date,obs,col="darkgrey", lwd=4)
+lines(date,Flow_NLCD16,col="darkgoldenrod2",lwd=1.5,lty=1)
+lines(date,grow, col="firebrick3", lwd=1.5,lty=2)
+lines(date,non, col="deepskyblue2", lwd=1.5, lty=3)
 title("d)",adj=0.01, line=-1.2, cex.main=1.5)
 
 # Add legend
 legend("topright", inset=c(0.658,0),legend=c("Observed","Dyn. World 2016 growing", "Dyn. World 2016 non-gro.","NLCD 2016"), 
-       lty=c(1,2,3,1), lwd=c(1,1,1,1), col=c("darkgrey","red","blue","darkgoldenrod2"),bg="white")
+       lty=c(1,2,3,1), lwd=c(4,1.5,1.5,1.5), col=c("darkgrey","firebrick3","deepskyblue2","darkgoldenrod2"),bg="white")
+
+# Stop printing
+dev.off()
