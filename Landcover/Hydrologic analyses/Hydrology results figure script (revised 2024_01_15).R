@@ -208,8 +208,8 @@ par(mar=c(3,3,2,1)+0.1, mgp=c(2,1,0)) # bottom, left, top, right
 plot(log10(obs), log10(grow), col=alpha("firebrick3",0.1),pch=16,
      xlim=c(-2,2.1), ylim=c(-2,2.1),xlab="log(Observed discharge (m3/s))",
      ylab="log(Model discharge (m3/s))")
-title("a)",adj=0.05, line=-1.2, cex.main=1.5)
 grid()
+title("a)",adj=0.05, line=-1.2, cex.main=1.5)
 abline(0,1, lwd=2, col="darkgrey", lty=2)
 legend("bottomright",legend="Growing",col="firebrick3",pch=16,bg="white")
 
