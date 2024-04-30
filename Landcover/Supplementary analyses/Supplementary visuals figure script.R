@@ -45,7 +45,7 @@ sent_non_4red[sent_non_4red>255] <- 255 # remove unrealistic values after bright
 
 # Create Dynamic World palette and class labels (0=water, etc.)
 dw_pal1 <- c('#397D49', '#88B053', '#7A87C6', '#E49635', '#DFC35A',
-             '#C4281B')
+             'darkgrey')
 dw_labs1 <- c('trees', 'grass', 'flooded_vegetation', 'crops', 'shrub_and_scrub',
               'built')
 
