@@ -48,7 +48,7 @@ grid()
 legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
 title("m)",adj=0.02, line=-1.2, cex.main=1.5)
 title("NLCD19 forest classes",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 ### b) DW original ###########################################################
 # Load data
@@ -70,7 +70,7 @@ grid()
 legend("topright",legend="Trees", fill=c("#397D49"),bg="white")
 title("n)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree class",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 ### c) DW pixel probs##########################################################
 # Load data
@@ -85,7 +85,7 @@ plot(shed$geometry,add=T)
 grid()
 title("o)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree probability",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 
 ### d) DW sub-classified#######################################################
@@ -118,7 +118,7 @@ grid()
 legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
 title("p)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 
 ### e) Watershed areas ########################################################
