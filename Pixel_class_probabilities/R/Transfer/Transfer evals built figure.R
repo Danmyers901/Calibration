@@ -285,4 +285,4 @@ print(acc_mat_dis)
 setwd("../")
 
 # Stop printing
-dev.off()
+# dev.off()
