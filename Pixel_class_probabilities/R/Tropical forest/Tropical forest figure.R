@@ -41,7 +41,7 @@ grid()
 legend("topright",legend=c("Mature","Decid.","Second."), fill=c("#33a02c","#fdbf6f","#b2df8a"),bg="white",cex=0.8)
 title("e)",adj=0.02, line=-1.2, cex.main=1.5)
 title("SINAC topical forest classes",adj=0.98, line=-13.9, cex.main=1)
-
+box()
 
 
 ### b) DW original ###########################################################
@@ -61,7 +61,7 @@ legend("topright",legend="Trees", fill=c("#397D49"),bg="white")
 title("f)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 trees",adj=0.98, line=-13.9, cex.main=1)
 title("No \ndata",adj=0.9, line=-5, cex.main=1)
-
+box()
 
 
 ### c) DW pixel probs##########################################################
@@ -79,7 +79,7 @@ grid()
 title("g)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree probability",adj=0.98, line=-13.9, cex.main=1)
 title("No \ndata",adj=0.9, line=-5, cex.main=1)
-
+box()
 
 
 ### d) DW sub-classified#######################################################
@@ -112,7 +112,7 @@ legend("topright",legend=c("Mature","Decid.","Second."), fill=c("#33a02c","#fdbf
 title("h)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.98, line=-13.9, cex.main=1)
 title("No \ndata",adj=0.9, line=-5, cex.main=1)
-
+box()
 
 
 ### e) Watershed areas ########################################################
