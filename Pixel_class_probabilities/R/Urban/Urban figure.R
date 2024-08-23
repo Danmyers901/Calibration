@@ -51,7 +51,7 @@ grid()
 legend("topright",legend=c("Open","Low","Medium","High"), fill=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),bg="white",cex=0.8)
 title("i)",adj=0.02, line=-1.2, cex.main=1.5)
 title("NLCD19 urban classes",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 
 ### b) DW original ###########################################################
@@ -71,7 +71,7 @@ grid()
 legend("topright",legend="Built", fill=c('#C4281B'),bg="white")
 title("j)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 built class",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 
 ### c) DW pixel probs##########################################################
@@ -87,7 +87,7 @@ plot(shed$geometry,add=T)
 grid()
 title("k)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 built probability",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 
 ### d) DW sub-classified#######################################################
@@ -125,7 +125,7 @@ grid()
 legend("topright",legend=c("Open","Low","Medium","High"), fill=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),bg="white",cex=0.8)
 title("l)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 
 ### e) Watershed areas ########################################################
