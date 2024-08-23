@@ -1,4 +1,4 @@
-# Pixel probabilities figure 3 - temperate forest
+# Pixel probabilities figure - temperate forest
 # Dan Myers, 4/13/2023
 
 # First, align the DW pixel probabilities, DW composite, and NLCD rasters in QGIS.
@@ -16,8 +16,11 @@ library(sf)
 library(tmap)
 library(tmaptools)
 
+# Start printing
+png("LULC figure.png",bg="white",res=300,width=6.5,height=6.5,units="in")
+
 # Start plot
-windows(6.5,6.5)
+# windows(6.5,6.5)
 par(mar=c(1,1,1,1))
 
 nf <- layout(matrix(c(1,2,3,4, # top
@@ -57,7 +60,7 @@ grid()
 legend("topright",legend=c("Decid.","Everg.","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
 title("a)",adj=0.02, line=-1.2, cex.main=1.5)
 title("NLCD19 forest classes",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 ### b) DW original ###########################################################
 # Load data
@@ -76,7 +79,7 @@ grid()
 legend("topright",legend="Trees", fill=c("#397D49"),bg="white")
 title("b)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree class",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 ### c) DW pixel probs##########################################################
 # Load data
@@ -91,7 +94,7 @@ plot(shed$geometry,add=T)
 grid()
 title("c)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree probability",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 
 ### d) DW sub-classified#######################################################
@@ -124,7 +127,7 @@ grid()
 legend("topright",legend=c("Decid.","Everg.","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
 title("d)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.02, line=-13.9, cex.main=1)
-
+box()
 
 
 ### e) Watershed areas ########################################################
