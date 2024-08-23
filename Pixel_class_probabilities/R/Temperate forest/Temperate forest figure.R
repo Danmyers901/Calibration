@@ -1,4 +1,4 @@
-# Pixel probabilities figure - temperate forest
+# Pixel probabilities figure 3 - temperate forest
 # Dan Myers, 4/13/2023
 
 # First, align the DW pixel probabilities, DW composite, and NLCD rasters in QGIS.
