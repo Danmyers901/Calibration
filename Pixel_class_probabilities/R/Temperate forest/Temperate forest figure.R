@@ -17,10 +17,10 @@ library(tmap)
 library(tmaptools)
 
 # Start printing
-png("LULC figure.png",bg="white",res=300,width=6.5,height=6.5,units="in")
+# png("LULC figure.png",bg="white",res=300,width=6.5,height=6.5,units="in")
 
 # Start plot
-# windows(6.5,6.5)
+windows(6.5,6.5)
 par(mar=c(1,1,1,1))
 
 nf <- layout(matrix(c(1,2,3,4, # top
