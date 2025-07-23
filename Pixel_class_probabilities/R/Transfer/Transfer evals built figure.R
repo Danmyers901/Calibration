@@ -21,7 +21,8 @@ library(tmaptools)
 # Load data
 nlcd <- raster("align2_nlcd.tif")
 shed_orig <- st_read("MONO_BUCK_shed.shp")
-shed <- st_transform(shed_orig, crs=st_crs(nlcd))
+# shed <- st_transform(shed_orig, crs=st_crs(nlcd))
+shed <- st_transform(shed_orig, crs=st_crs(3857))
 
 nlcd_open <- reclassify(nlcd, matrix(c(0,0,0,
                                        0,20,0,
@@ -50,7 +51,7 @@ plot(nlcd_urb, col=c("#FFFFFF","#E8D1D1","#E29E8C","#ff0000","#B50000"),legend=F
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend=c("Open","Low","Medium","High"), fill=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),bg="white",cex=0.8)
-title("q)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(q)",adj=0.02, line=-1.2, cex.main=1.5)
 title("NLCD19 urban classes",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -73,7 +74,7 @@ plot(dw_comp_urb, col='#C4281B',legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend="Built", fill=c('#C4281B'),bg="white")
-title("r)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(r)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 built class",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -89,7 +90,7 @@ dw_urb <- dw * dw_comp_urb
 plot(dw_urb,legend=T,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-title("s)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(s)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 built probability",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -127,7 +128,7 @@ plot(dw_pp_urb, col=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),legend=FALSE,axes
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend=c("Open","Low","Medium","High"), fill=c("#E8D1D1","#E29E8C","#ff0000","#B50000"),bg="white",cex=0.8)
-title("t)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(t)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -285,4 +286,4 @@ print(acc_mat_dis)
 setwd("../")
 
 # Stop printing
-# dev.off()
+dev.off()
