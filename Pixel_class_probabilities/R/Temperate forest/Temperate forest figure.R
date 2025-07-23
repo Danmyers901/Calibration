@@ -17,10 +17,11 @@ library(tmap)
 library(tmaptools)
 
 # Start printing
-# png("LULC figure.png",bg="white",res=300,width=6.5,height=6.5,units="in")
+png("LULC figure.png",bg="white",res=300,width=6.5,height=6.5,units="in")
+# windows(6.5,6.5)
 
 # Start plot
-windows(6.5,6.5)
+# windows(6.5,6.5)
 par(mar=c(1,1,1,1))
 
 nf <- layout(matrix(c(1,2,3,4, # top
@@ -58,7 +59,7 @@ plot(nlcd_for, col=c("#FFFFFF","#85C77E","#38814E","#D4E7B0"),legend=FALSE,axes=
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend=c("Decid.","Everg.","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
-title("a)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(a)",adj=0.02, line=-1.2, cex.main=1.5)
 title("NLCD19 forest classes",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -77,7 +78,7 @@ plot(dw_comp_for, col="#397D49",legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend="Trees", fill=c("#397D49"),bg="white")
-title("b)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(b)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree class",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -92,7 +93,7 @@ dw_tree <- dw * dw_comp_for
 plot(dw_tree,legend=T,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-title("c)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(c)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree probability",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -125,7 +126,7 @@ plot(dw_pp_for, col=c("#85C77E","#38814E","#D4E7B0"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend=c("Decid.","Everg.","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
-title("d)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(d)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.02, line=-13.9, cex.main=1)
 box()
 
