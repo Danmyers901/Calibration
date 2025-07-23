@@ -21,8 +21,8 @@ library(tmaptools)
 # Load data
 nlcd_c <- raster("align2_nlcd.tif")
 shed_orig <- st_read("MONO_BUCK_shed.shp")
-shed <- st_transform(shed_orig, crs=st_crs(nlcd_c))
-
+# shed <- st_transform(shed_orig, crs=st_crs(nlcd_c))
+shed <- st_transform(shed_orig, crs=st_crs(3857))
 
 # Extract forest and reclassify
 nlcd_dec <- reclassify(nlcd_c, matrix(c(0,0,0,
@@ -46,7 +46,7 @@ plot(nlcd_for, col=c("#FFFFFF","#85C77E","#38814E","#D4E7B0"),legend=FALSE,axes=
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
-title("m)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(m)",adj=0.02, line=-1.2, cex.main=1.5)
 title("NLCD19 forest classes",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -68,7 +68,7 @@ plot(dw_comp_for, col=c("#FFFFFF","#397D49"),legend=FALSE,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend="Trees", fill=c("#397D49"),bg="white")
-title("n)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(n)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree class",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -83,7 +83,7 @@ dw_tree <- dw * dw_comp_for
 plot(dw_tree,legend=T,axes=FALSE)
 plot(shed$geometry,add=T)
 grid()
-title("o)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(o)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 tree probability",adj=0.02, line=-13.9, cex.main=1)
 box()
 
@@ -116,7 +116,7 @@ plot(dw_pp_for, col=c("#FFFFFF","#85C77E","#38814E","#D4E7B0"),legend=FALSE,axes
 plot(shed$geometry,add=T)
 grid()
 legend("topright",legend=c("Deciduous","Evergreen","Mixed"), fill=c("#85C77E","#38814E","#D4E7B0"),bg="white",cex=0.8)
-title("p)",adj=0.02, line=-1.2, cex.main=1.5)
+title("(p)",adj=0.02, line=-1.2, cex.main=1.5)
 title("DW22 sub-classified",adj=0.02, line=-13.9, cex.main=1)
 box()
 
