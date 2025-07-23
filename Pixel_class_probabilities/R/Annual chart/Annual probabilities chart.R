@@ -2,7 +2,7 @@
 # Dan Myers, 4/13/2023
 
 # Set working directory
-setwd("R:/NPS_NCRN_VitalSigns/Analyses/Projects/AGU23/Scripts/R/Annual chart/")
+# setwd("R:/NPS_NCRN_VitalSigns/Analyses/Projects/AGU23/Scripts/R/Annual chart/")
 
 # Load packages
 library(raster)
@@ -15,7 +15,8 @@ naip <- rast("m_3907746_nw_18_060_20210616.tif")
 
 
 # Start plot
-windows(6.5,4.33)
+# windows(6.5,4.33)
+png("Figure 2.png",bg="white",res=300,width=6.5,height=4.33,units="in")
 # par(mfrow=c(3,2))
 
 nf <- layout(matrix(c(1,1,1,2,2,2, # top
@@ -38,22 +39,22 @@ mark(297750,4356554,labels="II",col_bg="white")
 mark(297964,4356837,labels="III",col_bg="white")
 
 # Add reference
-mark(xl[1],yl[2]-28,labels="    ",col_bg="white")
-title("a)",adj=0.02, line=-1.2, cex.main=1.5)
+mark(xl[1],yl[2]-20,labels="    ",col_bg="white")
+mark(xl[1],yl[2]-20,labels="(a)",col_bg="white")
 
 
 ### b) DW22 hillshade##########################################################
 # Load image
 dw <- rast("Chart_DW22_hillshade_grey_26918.tif")
 
-# Transform projection
-# dw_p <- projectRaster(dw,crs="+init=epsg:26918")
-
 # Crop image
 dw_c <- crop(dw, extent(xl[1],xl[2],yl[1],yl[2]))
 
+# Transform projection
+# dw_c <- project(dw_c,"+init=epsg:4326")
+
 # Plot DW image
-plotRGB(dw_c, main="",axes=FALSE,mar=mars)
+plotRGB(dw_c, main="",axes=FALSE,mar=mars, smooth=F)
 
 # Add point locations
 mark(x=297708,y=4356631,labels="I",col_bg="white")
@@ -61,12 +62,12 @@ mark(297750,4356554,labels="II",col_bg="white")
 mark(297964,4356837,labels="III",col_bg="white")
 
 # Add reference
-mark(xl[1]-5,yl[2]-28,labels="    ",col_bg="white")
-title("b)",adj=0.02, line=-1.2, cex.main=1.5)
+mark(xl[1]-5,yl[2]-20,labels="    ",col_bg="white")
+mark(xl[1]-5,yl[2]-20,labels="(b)",col_bg="white")
 
 # Add legend
-legend("bottomright",legend=c("Built","Trees","Crops"),fill=c('#A9A9A9','#397D49',
-                                                              '#E49635'),bg="white")
+legend("bottomright",legend=c("Built","Trees","Crops"),pt.bg=c('#A9A9A9','#397D49',
+                                                              '#E49635'),bg="white", y.intersp=0.4, pch=22,pt.cex=2)
 
 ### c) DW22 forest ############################################################
 # Load data
@@ -88,7 +89,7 @@ lines(date2,data2$built,col='darkgrey')
 lines(date2,data2$trees,col="#397D49")
 
 # Add reference
-title("c) I",adj=0.02, line=-1.2, cex.main=1.5)
+title("(c) I",adj=0.02, line=-1.2, cex.main=1.5)
 
 # Add labels
 mark(as.Date("2022-06-15",format="%Y-%m-%d"),0.6,labels='trees',col="#397D49",col_bg="white")
@@ -115,7 +116,7 @@ lines(date2,data2$built,col='darkgrey')
 lines(date2,data2$trees,col="#397D49")
 
 # Add reference
-title("d) II",adj=0.02, line=-1.2, cex.main=1.5)
+title("(d) II",adj=0.02, line=-1.2, cex.main=1.5)
 
 
 
@@ -138,4 +139,6 @@ lines(date2,data2$built,col='darkgrey')
 lines(date2,data2$trees,col="#397D49")
 
 # Add reference
-title("e) III",adj=0.02, line=-1.2, cex.main=1.5)
+title("(e) III",adj=0.02, line=-1.2, cex.main=1.5)
+
+dev.off()
