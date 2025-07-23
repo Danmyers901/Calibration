@@ -2,7 +2,7 @@
 
 These scripts are associated with the manuscript:
 
-Convolutional neural network (CNN) based pixel probabilities for forested and urban land cover classification
+Increasing the thematic resolution for trees and built area in a global land cover dataset using class probabilities
 Daniel T. Myers1* (ORCID 0000-0002-1932-5775), Diana Oviedo-Vargas1, Melinda Daniels1, Yog Aryal2
 
 1 Stroud Water Research Center, 970 Spencer Road, Avondale, Pennsylvania 19311, USA
